@@ -1,7 +1,7 @@
 import numpy as np
 m=4
 n=5
-k=int(n/3)
+k=int(2*n/3)
 #start counting from 0
 n1 = np.array([1,2],dtype=int)
 n2 = np.array([2],dtype=int)
