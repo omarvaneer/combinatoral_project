@@ -1,0 +1,67 @@
+import numpy as np
+import pandas as pd
+import shutil
+import os
+
+#the code might break if we give it corrupted text files or if the format is slightly different
+#there are some checks to make sure the expected data is found but its not the most rigorous
+
+def parseFile(in_filename,out_filename):
+    file = open(in_filename, "r")
+
+    #first line
+    m,n = list(map(int,file.readline().split()))
+    dataMatrix = np.zeros([m,n],dtype=bool)
+    print(m)
+    print(n)
+
+    #skip column weights
+    counter = 0
+    line = file.readline().split()
+    while counter<n:
+        counter += len(line)
+        line = file.readline().split()
+
+    #read data (m number of rows)
+    for row in range(m):
+        #number of col entries expected
+        num_cols = int(line[0])
+        i=0
+        
+        #populate mxn data matrix
+        while i<num_cols:
+            line = file.readline().split()
+            indexes = list(map(int,line))
+            for idx in indexes:
+                #the indexes of raw data count starting from 1
+                dataMatrix[row,idx-1]=True
+            i+=len(indexes)
+        
+        #prepare next line
+        line = file.readline().split()
+
+    print(dataMatrix)
+    #double check end of file
+    if(line):
+        print("warning possibly bad file")
+
+    #convert mxn matrix to list of lists representation
+    data_list = []
+    for col in range(n):
+        subset = np.nonzero(dataMatrix[:,col])[0]
+        data_list.append(subset)
+    data=np.asarray(data_list,dtype=object)
+
+    with open(out_filename, 'wb') as f0:
+        np.savez(f0,m=m,data=data)
+
+if __name__ == '__main__':
+    #raw folder of txt files
+    raw_folder = "benchmark_raw"
+    in_filename = os.path.join(raw_folder,"scp41.txt")
+
+    #processed npz files
+    output_folder = "benchmark"
+    out_filename = os.path.join(output_folder,"scp41.npz")
+
+    parseFile(in_filename,out_filename)
