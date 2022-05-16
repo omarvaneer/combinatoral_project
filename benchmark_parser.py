@@ -6,13 +6,13 @@ import os
 #there are some checks to make sure the expected data is found but its not the most rigorous
 
 def parseFile(in_filename,out_filename):
-    file = open(in_filename, "r")
+    file = open(in_filename+'.txt', "r")
 
     #first line
     m,n = list(map(int,file.readline().split()))
     dataMatrix = np.zeros([m,n],dtype=bool)
-    print(m)
-    print(n)
+    #print(m)
+    #print(n)
 
     #skip column weights
     counter = 0
@@ -39,7 +39,7 @@ def parseFile(in_filename,out_filename):
         #prepare next line
         line = file.readline().split()
 
-    print(dataMatrix)
+    #print(dataMatrix)
     #double check end of file
     if(line):
         print("warning possibly bad file")
@@ -51,8 +51,14 @@ def parseFile(in_filename,out_filename):
         data_list.append(subset)
     data=np.asarray(data_list,dtype=object)
 
-    with open(out_filename, 'wb') as f0:
-        np.savez(f0,m=m,data=data)
+    #two k values
+    k1 = int(n/3)
+    k2 = int(2*n/3)
+    with open(out_filename+'_k'+str(k1)+'.npz', 'wb') as f0:
+        np.savez(f0,m=m,k=k1,data=data)
+    with open(out_filename+'_k'+str(k2)+'.npz', 'wb') as f1:
+        np.savez(f1,m=m,k=k1,data=data)
+    file.close()
 
 if __name__ == '__main__':
 
@@ -62,7 +68,7 @@ if __name__ == '__main__':
     output_folder = "benchmark"
 
     for filename in os.listdir(raw_folder):
-        in_filename = os.path.join(raw_folder,filename)
-        out_filename = os.path.join(output_folder,filename.split('.')[0]+'.npz')
+        in_filename = os.path.join(raw_folder,filename.split('.')[0])
+        out_filename = os.path.join(output_folder,filename.split('.')[0])
 
         parseFile(in_filename,out_filename)

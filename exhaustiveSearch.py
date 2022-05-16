@@ -4,7 +4,7 @@ import multiprocessing
 #The minimum set covering problem can be framed as an mxn array. M total elements in set (rows), N subsets (cols)
 
 class ExhaustiveSearch():
-    def __init__(self,dataFile,k):
+    def __init__(self,dataFile):
 
         #load instance
         dataset = np.load(dataFile,allow_pickle=True)
@@ -13,16 +13,16 @@ class ExhaustiveSearch():
                                     # if we want to introduce randomness in exhaustive search order,
                                     # I suggest adding a shuffle function to the dataset
         self.n = self.data.size #number of subsets
-        self.k=int(np.min([k,self.data.size]))#number of subsets threshold
+        self.k=dataset['k'] #number of subsets threshold
 
         #combination generator initial condition  
         self.subset_group = np.zeros(self.k,dtype=int)
         self.coolex_b = np.zeros(self.n,dtype=bool)
-        for i in range(k):
+        for i in range(self.k):
             self.subset_group[i] = i
             self.coolex_b[i]=True
-        self.coolex_x = int(k)
-        self.coolex_y = int(k)
+        self.coolex_x = int(self.k)
+        self.coolex_y = int(self.k)
 
     #check a different combination
     def iterate(self):
@@ -88,8 +88,7 @@ def iterateExhaustiveSearch(e,result):
 if __name__ == '__main__':
 
     #test data
-    k=2
-    e = ExhaustiveSearch('example.npz',k)
+    e = ExhaustiveSearch('example_k3.npz')
 
     result = e.iterate()
     p=multiprocessing.Process(target=iterateExhaustiveSearch,args=[e,result])
