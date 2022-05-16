@@ -1,14 +1,15 @@
+import threading
 import numpy as np
 import random
 
 class InstanceGeneration():
     def __init__(self):
         self.instance = None
+        self.n = 0
     
-    def readLiteratureData(self,fileName):
-        pass
-
     def generateRandomInstance(self,size, possVals, subsets):
+
+        self.n = size
         
         #create a full set continaing a range of possible values
         nums = range(possVals)
@@ -43,16 +44,38 @@ class InstanceGeneration():
 
         subset_set = np.array([np.array(set) for set  in subset_set])
         self.instance = subset_set
-        
+
         # print(trueSet)
         # print("____________________")
         # print(all_subsets)
+    def toNPZ(self,instanceNum):
+        k1 = int((self.n)/3)
+        k2 = int(2*(self.n)/3)
+        with open('r' + instanceNum +'_k'+ str(k1)+'.npz', 'wb') as f0:
+            np.savez(f0,m=instanceNum,k=k1,data=self.instance)
+        with open('r' + instanceNum +'_k'+ str(k1)+'.npz', 'wb') as f1:
+            np.savez(f1,m=instanceNum,k=k1,data=self.instance)
 
 
 if __name__ == '__main__':
 
-    test = InstanceGeneration()
-    test.generateRandomInstance(10,100,10)
+    for i in range(1, 25):
 
+        size = random.randint(1,3)
 
+        if size == 1:
+            instance = InstanceGeneration()
+            num = random.randint(10,15)
+            instance.generateRandomInstance(num, num * 10, num - random.randint(1,5))
+            instance.toNPZ(i)
+        elif size == 2:
+            instance = InstanceGeneration()
+            num = random.randint(16,100)
+            instance.generateRandomInstance(num, num * 10, abs(num - random.randint(5,45)))
+            instance.toNPZ(i)
+        else:
+            instance = InstanceGeneration()
+            num = random.randint(101,1001)
+            instance.generateRandomInstance(num, num * 10, abs(num - random.randint(45,95)))
+            instance.toNPZ(i)
         
