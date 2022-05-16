@@ -1,5 +1,8 @@
+from socket import timeout
 import numpy as np
 import multiprocessing
+import os
+import time
 
 #The minimum set covering problem can be framed as an mxn array. M total elements in set (rows), N subsets (cols)
 
@@ -72,32 +75,69 @@ class ExhaustiveSearch():
         #so the early termination wouldn't be worth the extra overhead
 
 #this runs the algorithm in a function that can be put in its own process
-def iterateExhaustiveSearch(e,result):
-    #exhaustive search loop
-    while (result==0):
-        result = e.iterate()
+def iterateExhaustiveSearch(e,result,num):
+    with multiprocessing.get_context("spawn").Pool() as pool:
+        #exhaustive search loop
+        while (result==0):
+            result = e.iterate()
+            print("in loop")
 
-    #algorithm termination (not timeout)
-    if(result==1):
-        print("minimum cover found")
-        print(e.subset_group)
-    else:
-        print("no minimum cover")
+        #algorithm termination (not timeout)
+        if(result==1):
+            #print("minimum cover found")
+            #print(e.subset_group)
+            num.value=1
+            #queue.put(e.subset_group)
+        else:
+            #print("no minimum cover")
+            num.value=0
 
-#main event loop with timeout
-if __name__ == '__main__':
+#creates an output file to log results of one run
+def createOutputFile(filename, code):
+    with open(filename, 'w') as f:
+        f.write(str(code))
+        #if code==1:
+        #    f.write('\n')
+        #    for idx in args:
+        #        f.write(str(idx)+' ')
 
-    #test data
-    e = ExhaustiveSearch('example_k3.npz')
+#runs one dataset for 1 minute and 10 minutes
+def searchDataset(in_filename,out_filename,time):
+
+    e = ExhaustiveSearch(in_filename+'.npz')
+    num = multiprocessing.Value('i', 0)
+    #arr = multiprocessing.lis('i', range(e.k))
 
     result = e.iterate()
-    p=multiprocessing.Process(target=iterateExhaustiveSearch,args=[e,result])
+    p=multiprocessing.Process(target=iterateExhaustiveSearch,args=[e,result,num])
     p.start()
-    p.join(1)#run for 1 second before timeout, use this to test algorithm termination case
-    #p.join(0.1)# use this to test timeout case
+    p.join(time)#run for 60 seconds or 600 seconds before timeout
 
     #check timeout
     if p.is_alive():
         p.terminate()
-        print("timeout - minimum cover not found")
-        
+        #print("timeout - minimum cover not found")
+        createOutputFile(out_filename+'_t'+str(time)+'.txt',2)
+    else:
+        if num.value==0:
+            createOutputFile(out_filename+'_t'+str(time)+'.txt',0)
+        else:
+            createOutputFile(out_filename+'_t'+str(time)+'.txt',1) #consider adding array/certificate
+
+#main event loop with timeout
+if __name__ == '__main__':
+    multiprocessing.set_start_method("spawn")
+    #folder of benchmark npz files
+    benchmark_folder = "benchmark"
+    output_folder = "exhaustive_output"
+
+    for filename in os.listdir(benchmark_folder):
+        print(filename)
+        in_filename = os.path.join(benchmark_folder,filename.split('.')[0])
+        out_filename = os.path.join(output_folder,filename.split('.')[0])
+
+        searchDataset(in_filename,out_filename,60) #1 minute
+        searchDataset(in_filename,out_filename,600) #10 minutes
+
+
+

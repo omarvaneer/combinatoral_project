@@ -57,7 +57,7 @@ def parseFile(in_filename,out_filename):
     with open(out_filename+'_k'+str(k1)+'.npz', 'wb') as f0:
         np.savez(f0,m=m,k=k1,data=data)
     with open(out_filename+'_k'+str(k2)+'.npz', 'wb') as f1:
-        np.savez(f1,m=m,k=k1,data=data)
+        np.savez(f1,m=m,k=k2,data=data)
     file.close()
 
 if __name__ == '__main__':
