@@ -1,6 +1,5 @@
 import numpy as np
-import pandas as pd
-import shutil
+#import shutil #useful library for script automation/moving things around
 import os
 
 #the code might break if we give it corrupted text files or if the format is slightly different
@@ -56,12 +55,14 @@ def parseFile(in_filename,out_filename):
         np.savez(f0,m=m,data=data)
 
 if __name__ == '__main__':
+
     #raw folder of txt files
     raw_folder = "benchmark_raw"
-    in_filename = os.path.join(raw_folder,"scp41.txt")
-
     #processed npz files
     output_folder = "benchmark"
-    out_filename = os.path.join(output_folder,"scp41.npz")
 
-    parseFile(in_filename,out_filename)
+    for filename in os.listdir(raw_folder):
+        in_filename = os.path.join(raw_folder,filename)
+        out_filename = os.path.join(output_folder,filename.split('.')[0]+'.npz')
+
+        parseFile(in_filename,out_filename)
