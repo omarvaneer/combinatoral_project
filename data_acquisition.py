@@ -42,7 +42,7 @@ class InstanceGeneration():
         if len(remainder) != 0:
             all_subsets.append(remainder)
 
-        subset_set = np.array([np.array(set) for set  in subset_set])
+        all_subsets= np.array([np.array(set) for set  in subset_set])
         self.instance = all_subsets
 
         # print(trueSet)
