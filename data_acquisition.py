@@ -40,10 +40,10 @@ class InstanceGeneration():
         remainder = list(remainder)
 
         if len(remainder) != 0:
-            subset_set.append(remainder)
+            all_subsets.append(remainder)
 
         subset_set = np.array([np.array(set) for set  in subset_set])
-        self.instance = subset_set
+        self.instance = all_subsets
 
         # print(trueSet)
         # print("____________________")
@@ -51,18 +51,17 @@ class InstanceGeneration():
     def toNPZ(self,instanceNum):
         k1 = int((self.n)/3)
         k2 = int(2*(self.n)/3)
-        with open('r' + instanceNum +'_k'+ str(k1)+'.npz', 'wb') as f0:
+        with open('benchmark/r' + str(instanceNum) +'_k'+ str(k1)+'.npz', 'wb') as f0:
             np.savez(f0,m=instanceNum,k=k1,data=self.instance)
-        with open('r' + instanceNum +'_k'+ str(k1)+'.npz', 'wb') as f1:
-            np.savez(f1,m=instanceNum,k=k1,data=self.instance)
+        with open('benchmark/r' + str(instanceNum) +'_k'+ str(k2)+'.npz', 'wb') as f1:
+            np.savez(f1,m=instanceNum,k=k2,data=self.instance)
 
 
 if __name__ == '__main__':
 
-    for i in range(1, 25):
+    for i in range(1, 26):
 
         size = random.randint(1,3)
-
         if size == 1:
             instance = InstanceGeneration()
             num = random.randint(10,15)
