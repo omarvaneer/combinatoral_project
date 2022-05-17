@@ -6,11 +6,13 @@ class InstanceGeneration():
     def __init__(self):
         self.instance = None
         self.n = 0
+        self.range = 0
     
     def generateRandomInstance(self,size, possVals, subsets):
 
         self.n = size
-        
+        self.range = possVals
+
         #create a full set continaing a range of possible values
         nums = range(possVals)
         trueSet = set(random.sample(nums,size))
@@ -42,7 +44,7 @@ class InstanceGeneration():
         if len(remainder) != 0:
             all_subsets.append(remainder)
 
-        subset_set = np.array([np.array(set) for set  in subset_set])
+        all_subsets= np.array([np.array(set) for set  in all_subsets])
         self.instance = all_subsets
 
         # print(trueSet)
@@ -52,9 +54,9 @@ class InstanceGeneration():
         k1 = int((self.n)/3)
         k2 = int(2*(self.n)/3)
         with open('benchmark/r' + str(instanceNum) +'_k'+ str(k1)+'.npz', 'wb') as f0:
-            np.savez(f0,m=instanceNum,k=k1,data=self.instance)
+            np.savez(f0,m=self.range,k=k1,data=self.instance)
         with open('benchmark/r' + str(instanceNum) +'_k'+ str(k2)+'.npz', 'wb') as f1:
-            np.savez(f1,m=instanceNum,k=k2,data=self.instance)
+            np.savez(f1,m=self.range,k=k2,data=self.instance)
 
 
 if __name__ == '__main__':
