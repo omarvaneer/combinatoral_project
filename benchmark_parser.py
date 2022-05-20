@@ -51,13 +51,9 @@ def parseFile(in_filename,out_filename):
         data_list.append(subset)
     data=np.asarray(data_list,dtype=object)
 
-    #two k values
-    k1 = int(n/3)
-    k2 = int(2*n/3)
-    with open(out_filename+'_k'+str(k1)+'.npz', 'wb') as f0:
-        np.savez(f0,m=m,k=k1,data=data)
-    with open(out_filename+'_k'+str(k2)+'.npz', 'wb') as f1:
-        np.savez(f1,m=m,k=k2,data=data)
+    with open(out_filename+'.npz', 'wb') as f0:
+        np.savez(f0,m=m,data=data)
+
     file.close()
 
 if __name__ == '__main__':
