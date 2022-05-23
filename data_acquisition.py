@@ -51,17 +51,13 @@ class InstanceGeneration():
         # print("____________________")
         # print(all_subsets)
     def toNPZ(self,instanceNum):
-        k1 = int((self.n)/3)
-        k2 = int(2*(self.n)/3)
-        with open('benchmark/r' + str(instanceNum) +'_k'+ str(k1)+'.npz', 'wb') as f0:
-            np.savez(f0,m=self.range,k=k1,data=self.instance)
-        with open('benchmark/r' + str(instanceNum) +'_k'+ str(k2)+'.npz', 'wb') as f1:
-            np.savez(f1,m=self.range,k=k2,data=self.instance)
+        with open('benchmark/r' + str(instanceNum) +'.npz', 'wb') as f0:
+            np.savez(f0,m=self.range,data=self.instance)
 
 
 if __name__ == '__main__':
 
-    for i in range(1, 26):
+    for i in range(1, 51):
 
         size = random.randint(1,3)
         if size == 1:
