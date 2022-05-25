@@ -15,7 +15,7 @@ class InstanceGeneration():
 
         #create a full set continaing a range of possible values
         nums = range(possVals)
-        trueSet = set(random.sample(nums,size))
+        trueSet = set(nums)#set(random.sample(nums,size))
 
         #create a list of empty sets
         all_subsets = []

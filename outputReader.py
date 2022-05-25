@@ -33,3 +33,7 @@ exhaustive search output file format:
         0: something went wrong. this shouldn't happen
         -1: no set cover for any k - also shouldn't happen
 """
+
+#insight: the 1 minute and 10 minute results are often the same. 
+# certain k values can easily result in so many conbinations that both versions will get stuck there. 
+# the 10 minute one gets a little farther but usually not enough to move on to a different k value. 

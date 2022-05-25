@@ -168,7 +168,7 @@ if __name__ == '__main__':
     output_folder = "exhaustive_output"
 
     for filename in os.listdir(benchmark_folder):
-        if filename[3]=='e':
+        if filename[0]=='r':
             print(filename)
             in_filename = os.path.join(benchmark_folder,filename.split('.')[0])
             out_filename = os.path.join(output_folder,filename.split('.')[0])
