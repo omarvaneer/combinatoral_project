@@ -62,17 +62,17 @@ if __name__ == '__main__':
         size = random.randint(1,3)
         if size == 1:
             instance = InstanceGeneration()
-            num = random.randint(10,15)
-            instance.generateRandomInstance(num, num * 10, num - random.randint(1,5))
+            num = random.randint(6,20)
+            instance.generateRandomInstance(5+int(num/20), num, random.randint(int(2.5*num),int(3.5*num)))
             instance.toNPZ(i)
         elif size == 2:
             instance = InstanceGeneration()
-            num = random.randint(16,100)
-            instance.generateRandomInstance(num, num * 10, abs(num - random.randint(5,45)))
+            num = random.randint(21,100)
+            instance.generateRandomInstance(5+int(num/20), num, random.randint(int(2.5*num),int(3.5*num)))
             instance.toNPZ(i)
         else:
             instance = InstanceGeneration()
-            num = random.randint(101,1001)
-            instance.generateRandomInstance(num, num * 10, abs(num - random.randint(45,95)))
+            num = random.randint(101,300)
+            instance.generateRandomInstance(5+int(num/20), num, random.randint(int(2.5*num),int(3.5*num)))
             instance.toNPZ(i)
         

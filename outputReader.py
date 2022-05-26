@@ -4,8 +4,9 @@ import os
 
 #ill just load everything into a dataframe and send it to csv
 
-data = pd.DataFrame(columns=['name','time','result','min k'])
+data = pd.DataFrame(columns=['name','time','result','min k','m (true set)','n (number of subsets)'])
 output_folder = "exhaustive_output"
+npz_folder = "benchmark"
 
 counter = 0
 for filename in os.listdir(output_folder):
@@ -15,11 +16,15 @@ for filename in os.listdir(output_folder):
     res = int(file.readline())
     minK = int(file.readline())
 
-    data.loc[counter] = [metadata[0],metadata[1][1:],res,minK]
+    dataset = np.load(os.path.join(npz_folder,metadata[0]+'.npz'),allow_pickle=True)
+    m = dataset['m']#total unique elements of set
+    n = dataset['data'].size#array of subsets
+
+    data.loc[counter] = [metadata[0],metadata[1][1:],res,minK,m,n]
     counter +=1
     file.close()
 
-data.to_csv("results.csv",index=False)
+data.to_csv(output_folder+"_results.csv",index=False)
 
 """
 exhaustive search output file format:
