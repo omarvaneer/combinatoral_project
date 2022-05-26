@@ -76,7 +76,7 @@ def createOutputFile(filename, code,mink):
 
 #runs one dataset for 10 minutes
 #greedy really shouldn't take that long. just placing an upper timeout bound for consistency
-def searchDataset(in_filename,out_filename,time):
+def greedySearchDataset(in_filename,out_filename,time):
 
     exitcode = multiprocessing.Value('i', 0)
     mink = multiprocessing.Value('i', 0)
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         in_filename = os.path.join(benchmark_folder,filename.split('.')[0])
         out_filename = os.path.join(output_folder,filename.split('.')[0])
 
-        searchDataset(in_filename,out_filename,600) #10 minutes
+        greedySearchDataset(in_filename,out_filename,600) #10 minutes
         #in practice, each run takes at most like 15 seconds
 
 """

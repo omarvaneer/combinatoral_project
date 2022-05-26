@@ -141,7 +141,7 @@ def createOutputFile(filename, code,mink):
         #        f.write(str(idx)+' ')
 
 #runs one dataset for 1 minute and 10 minutes
-def searchDataset(in_filename,out_filename,time):
+def exhaustiveSearchDataset(in_filename,out_filename,time):
 
     exitcode = multiprocessing.Value('i', 0)
     mink = multiprocessing.Value('i', 0)
@@ -173,8 +173,8 @@ if __name__ == '__main__':
             in_filename = os.path.join(benchmark_folder,filename.split('.')[0])
             out_filename = os.path.join(output_folder,filename.split('.')[0])
 
-            searchDataset(in_filename,out_filename,60) #1 minute
-            #searchDataset(in_filename,out_filename,600) #10 minutes
+            #exhaustiveSearchDataset(in_filename,out_filename,60) #1 minute
+            exhaustiveSearchDataset(in_filename,out_filename,600) #10 minutes
 
 """
 output file format:
