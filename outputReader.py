@@ -5,7 +5,7 @@ import os
 #ill just load everything into a dataframe and send it to csv
 
 data = pd.DataFrame(columns=['name','time','result','min k','m (true set)','n (number of subsets)'])
-output_folder = "exhaustive_output"
+output_folder = "greedy_output"
 npz_folder = "benchmark"
 
 counter = 0
