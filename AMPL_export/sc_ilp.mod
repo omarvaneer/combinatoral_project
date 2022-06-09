@@ -11,6 +11,6 @@ param matr {i in 0..M-1, j in 0..N-1} binary;
 
 var x {j in 0..N-1} binary;
 
-maximize objective: -1 * sum {j in 0..N-1} x[j];
+minimize objective: sum {j in 0..N-1} x[j];
 subject to C1 {i in 0..M-1}: sum{j in 0..N-1} matr[i,j] * x[j]>=1;
 
