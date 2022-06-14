@@ -1,0 +1,11 @@
+CPLEX 20.1.0.0: optimal solution; objective 3
+0 dual simplex iterations (0 in phase I)
+x [*] :=
+0  0
+1  1
+2  0
+3  1
+4  0
+5  1
+;
+
