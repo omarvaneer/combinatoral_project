@@ -1,0 +1,15 @@
+CPLEX 20.1.0.0: time=600
+CPLEX 20.1.0.0: optimal integer solution; objective 5
+0 MIP simplex iterations
+0 branch-and-bound nodes
+x [*] :=
+0  1
+1  0
+2  0
+3  1
+4  1
+5  1
+6  0
+7  1
+;
+

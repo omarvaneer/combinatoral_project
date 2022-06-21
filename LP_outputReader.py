@@ -5,7 +5,7 @@ import os
 #ill just load everything into a dataframe and send it to csv
 
 data = pd.DataFrame(columns=['name','result','min k','m (true set)','n (number of subsets)'])
-output_folder = os.path.join("AMPL_export","LP_out")
+output_folder = os.path.join("AMPL_export","ILP_out")
 npz_folder = "benchmark"
 
 counter = 0
@@ -13,6 +13,7 @@ for filename in os.listdir(output_folder):
     header = filename.split('.')[0]
     metadata = header.split('_')
     file = open(os.path.join(output_folder,filename), "r")
+    line = file.readline()
     line = file.readline()
     res =  int(len(line)>0)
     minK=-1
