@@ -173,8 +173,8 @@ if __name__ == '__main__':
             in_filename = os.path.join(benchmark_folder,filename.split('.')[0])
             out_filename = os.path.join(output_folder,filename.split('.')[0])
 
-            #exhaustiveSearchDataset(in_filename,out_filename,60) #1 minute
-            exhaustiveSearchDataset(in_filename,out_filename,600) #10 minutes
+            exhaustiveSearchDataset(in_filename,out_filename,60) #1 minute
+            #exhaustiveSearchDataset(in_filename,out_filename,600) #10 minutes
 
 """
 output file format:
